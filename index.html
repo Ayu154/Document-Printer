@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lohani Ayush</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8a11e;
+            margin: 0;
+            padding: 0;
+            color: #201300;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffb14a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group select, .input-group input[type="color"], .input-group input[type="number"], .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #8a2020;
+            border-radius: 5px;
+        }
+        .input-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        #download-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><center> Creator: Ayush Lohani <br> Document Printer</center></h1>
+        <div class="input-group">
+            <label for="bg-color">Background Color:</label>
+            <input type="color" id="bg-color" value="#ffffff">
+        </div>
+        <div class="input-group">
+            <label for="text-color">Text Color:</label>
+            <input type="color" id="text-color" value="#000000">
+        </div>
+        <div class="input-group">
+            <label for="font">Font:</label>
+            <select id="font">
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="Times New Roman, serif">Times New Roman</option>
+                <option value="Courier New, monospace">Courier New</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="Verdana, sans-serif">Verdana</option>
+                <option value="Impact, sans-serif">Impact</option>
+                <option value="Comic Sans MS, cursive">Comic Sans MS</option>
+                <option value="Arial Black, sans-serif">Arial Black</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="font-size">Font Size:</label>
+            <input type="number" id="font-size" min="8" max="72" value="12">
+        </div>
+        <button id="advance-options-btn" onclick="showAdvanceOptions()">Advance Options</button>
+        <div id="advance-options" style="display: none;">
+            <div class="input-group">
+                <label for="heading">Heading:</label>
+                <textarea id="heading" placeholder="Enter heading"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="body">Body:</label>
+                <textarea id="body" placeholder="Enter body"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="conclusion">Conclusion:</label>
+                <textarea id="conclusion" placeholder="Enter conclusion"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="border-color">Border Color:</label>
+                <input type="color" id="border-color" value="#000000">
+            </div>
+            <div class="input-group">
+                <label for="border-radius">Border Radius:</label>
+                <input type="number" id="border-radius" min="0" value="0">
+            </div>
+            <div class="input-group">
+                <label for="text-alignment">Text Alignment:</label>
+                <select id="text-alignment">
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                </select>
+            </div>
+        
+        <div class="input-group">
+            <label for="bg-image">Background Image: <br>(eg: white_bg.com)</label>
+            <input type="text" id="bg-image" placeholder="Enter URL of background image">
+        </div>
+        <div class="input-group">
+            <label for="line-spacing">Line Spacing:</label>
+            <input type="number" id="line-spacing" min="0" value="1">
+        </div>
+        <div class="input-group">
+            <label for="letter-spacing">Letter Spacing:</label>
+            <input type="number" id="letter-spacing" min="0" value="0">
+        </div>
+        <div class="input-group">
+            <label for="text-decoration">Text Decoration:</label>
+            <select id="text-decoration">
+                <option value="none">None</option>
+                <option value="underline">Underline</option>
+                <option value="overline">Overline</option>
+                <option value="line-through">Line Through</option>
+            </select>
+        </div>
+    </div>
+        <button onclick="printDocument()">Print Document</button>
+        <div id="output"></div>
+        <button id="download-btn" onclick="downloadDocument()" style="display: none;">Download Document</button>
+        <a id="download-link" download="document.txt" style="display: none;"></a>
+    </div>
+
+    <script>
+    function printDocument() {
+    var bgColor = document.getElementById('bg-color').value;
+    var textColor = document.getElementById('text-color').value;
+    var font = document.getElementById('font').value;
+    var fontSize = document.getElementById('font-size').value;
+
+    var heading = document.getElementById('heading').value;
+    var body = document.getElementById('body').value;
+    var conclusion = document.getElementById('conclusion').value;
+
+    var borderColor = document.getElementById('border-color').value;
+    var borderRadius = document.getElementById('border-radius').value;
+    var textAlignment = document.getElementById('text-alignment').value;
+
+    //////////////////////////////////////////////////////////////////////////////////
+    var bgImage = document.getElementById('bg-image').value;
+    var lineSpacing = document.getElementById('line-spacing').value;
+    var letterSpacing = document.getElementById('letter-spacing').value;
+    var textDecoration = document.getElementById('text-decoration').value;
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Check if any advanced options are empty
+    if (!heading || !body || !conclusion || !bgColor || !textColor || !font || !fontSize || !borderColor || !borderRadius || !textAlignment || !bgImage || !lineSpacing || !letterSpacing || !textDecoration) {
+        document.getElementById('output').innerHTML = "<div style='color:red;'>Please fill all the advanced options</div>";
+        // Hide download button
+        document.getElementById('download-btn').style.display = 'none';
+        return;
+    }
+
+    var output = document.getElementById('output');
+    output.innerHTML = "<div style='background-color: " + bgColor + "; color: " + textColor + "; font-family: " + font + "; font-size: " + fontSize + "px; padding: 20px; border: 2px solid " + borderColor + "; border-radius: " + borderRadius + "px; text-align: " + textAlignment + "; line-height: " + lineSpacing + "; letter-spacing: " + letterSpacing + "px; text-decoration: " + textDecoration + "; background-image: url(" + bgImage + ");'><h2>" + heading + "</h2><p>" + body + "</p><p><strong>Conclusion:</strong> " + conclusion + "</p></div>";
+    // Show download button
+    document.getElementById('download-btn').style.display = 'block';
+}
+
+        function downloadDocument() {
+            var content = document.getElementById('output').innerHTML;
+            var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+            var fileName = document.getElementById('download-link').getAttribute('download');
+            var url = URL.createObjectURL(blob);
+
+            var downloadLink = document.getElementById('download-link');
+            downloadLink.href = url;
+            downloadLink.click();
+
+            // Clean up
+            URL.revokeObjectURL(url);
+        }
+
+        function showAdvanceOptions() {
+            var advanceOptionsDiv = document.getElementById('advance-options');
+            var button = document.getElementById('advance-options-btn');
+
+            if (advanceOptionsDiv.style.display === 'none') {
+                advanceOptionsDiv.style.display = 'block';
+                button.textContent = 'Hide Advance Options';
+            } else {
+                advanceOptionsDiv
+                .style.display = 'none';
+                button.textContent = 'Advance Options';
+            }
+        }
+    </script>
+</body>
+</html>
